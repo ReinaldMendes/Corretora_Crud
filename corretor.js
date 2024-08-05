@@ -1,5 +1,5 @@
 const prompt = require("prompt-sync")();
-const crud = require("./corretora.js");
+const crudCorretora = require("./corretora.js");
 let nextUserId = 1;
 const corretores = [];
 
@@ -13,11 +13,11 @@ const idInvalido = (id) => {
 
 function listarcorretor() {
   if (corretores.length === 0) {
-    console.log("Nenhuma corretor cadastrada.");
+    console.log("Nenhum corretor cadastrado.");
   } else {
     corretores.forEach((corretor) => {
       console.log(
-        `ID: ${corretor.id} Corretora: ${corretor.corretora.idCorretora} - Nome : ${corretor.nome} `
+        `ID: ${corretor.id} - Nome: ${corretor.nome} - ID Corretora: ${corretor.idCorretora}`
       );
     });
   }
@@ -29,23 +29,22 @@ const modelo = () => {
   while (true) {
     corretor.nome = prompt("Qual é o nome do Corretor? ").trim();
     if (nomeInvalido(corretor.nome)) {
-      console.log("A corretor não pode ser vazio");
+      console.log("O nome do corretor não pode ser vazio.");
     } else {
       break;
     }
   }
 
-  crud.listarcorretora;
-  const idCorretora = lerIndice("Qual é o id da Corretora deseja atualizar? ");
   while (true) {
-    idCorretora = lerIndice("Qual é o id da Corretora deseja atualizar? ") - 1;
-    if (idInvalido(id)) {
-      console.log("Índice de corretora inválido");
+    crudCorretora.listarcorretora();
+    const idCorretora = lerIndice("Qual é o ID da Corretora? ");
+    if (crudCorretora.idInvalido(idCorretora)) {
+      console.log("ID de corretora inválido.");
     } else {
+      corretor.idCorretora = idCorretora;
       break;
     }
   }
-  corretor.corretora = corretores[idCorretora];
 
   return corretor;
 };
@@ -53,22 +52,22 @@ const modelo = () => {
 const criarcorretor = () => {
   const corretor = modelo();
   corretores.push(corretor);
-  console.log("corretor criada com sucesso");
+  console.log("Corretor criado com sucesso.");
 };
 
 const atualizarcorretor = () => {
   while (true) {
-    if (corretores.length == 0) {
-      console.log("Lista de corretores está vazia");
+    if (corretores.length === 0) {
+      console.log("Lista de corretores está vazia.");
       break;
     }
 
     listarcorretor();
 
-    const id = lerIndice("Qual é o ID da corretor que deseja atualizar? ");
+    const id = lerIndice("Qual é o ID do corretor que deseja atualizar? ");
 
     if (idInvalido(id)) {
-      console.log("ID inválido");
+      console.log("ID inválido.");
     } else {
       const corretorIndex = corretores.findIndex(
         (corretor) => corretor.id === id
@@ -76,7 +75,7 @@ const atualizarcorretor = () => {
       const corretorAtualizado = modelo();
       corretorAtualizado.id = id; // Mantém o mesmo ID
       corretores[corretorIndex] = corretorAtualizado;
-      console.log("corretor atualizada com sucesso");
+      console.log("Corretor atualizado com sucesso.");
       break;
     }
   }
@@ -84,23 +83,23 @@ const atualizarcorretor = () => {
 
 const removercorretor = () => {
   while (true) {
-    if (corretores.length == 0) {
-      console.log("Lista de corretoresestá vazia");
+    if (corretores.length === 0) {
+      console.log("Lista de corretores está vazia.");
       break;
     }
 
     listarcorretor();
 
-    const id = lerIndice("Qual é o ID da corretor que deseja remover? ");
+    const id = lerIndice("Qual é o ID do corretor que deseja remover? ");
 
     if (idInvalido(id)) {
-      console.log("ID inválido");
+      console.log("ID inválido.");
     } else {
       const corretorIndex = corretores.findIndex(
         (corretor) => corretor.id === id
       );
       corretores.splice(corretorIndex, 1);
-      console.log("corretor removida com sucesso");
+      console.log("Corretor removido com sucesso.");
       break;
     }
   }
