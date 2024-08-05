@@ -123,4 +123,5 @@ module.exports = {
   atualizar,
   remover,
   listarcorretora,
+  idInvalido,
 };
