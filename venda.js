@@ -8,7 +8,7 @@ const vendas = [];
 const lerIndice = (mensagem) => parseInt(prompt(mensagem));
 
 const idInvalido = (id, lista) => {
-  return !lista.some((item) => item.id === id);
+  return !vendas.some((venda) => venda.id === id);
 };
 
 function listarVenda() {
