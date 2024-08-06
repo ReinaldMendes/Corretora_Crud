@@ -7,8 +7,8 @@ const lerIndice = (mensagem) => parseInt(prompt(mensagem));
 
 const campoInvalido = (campo) => campo.trim() === "";
 
-const idInvalido = (id) => {
-  return !imoveis.some((imovel) => imovel.id === id);
+const idInvalido = (idImovel) => {
+  return !imoveis.some((imovel) => imovel.idImovel === idImovel);
 };
 
 function listarImovel() {
@@ -17,14 +17,14 @@ function listarImovel() {
   } else {
     imoveis.forEach((imovel) => {
       console.log(
-        `ID: ${imovel.id} - Número: ${imovel.numero} - Rua: ${imovel.rua} - Bairro: ${imovel.bairro} - ID Corretora: ${imovel.idCorretora}`
+        `ID: ${imovel.idImovel} - Número: ${imovel.numero} - Rua: ${imovel.rua} - Bairro: ${imovel.bairro} - ID Corretora: ${imovel.idCorretora}`
       );
     });
   }
 }
 
 const modeloImovel = () => {
-  let imovel = { id: nextImovelId++ };
+  let imovel = { idImovel: nextImovelId++ };
 
   while (true) {
     imovel.numero = prompt("Qual é o número do Imóvel? ").trim();
@@ -82,14 +82,16 @@ const atualizarImovel = () => {
 
     listarImovel();
 
-    const id = lerIndice("Qual é o ID do imóvel que deseja atualizar? ");
+    const idImovel = lerIndice("Qual é o ID do imóvel que deseja atualizar? ");
 
-    if (idInvalido(id)) {
+    if (idInvalido(idImovel)) {
       console.log("ID inválido.");
     } else {
-      const imovelIndex = imoveis.findIndex((imovel) => imovel.id === id);
+      const imovelIndex = imoveis.findIndex(
+        (imovel) => imovel.idImovel === idImovel
+      );
       const imovelAtualizado = modeloImovel();
-      imovelAtualizado.id = id; // Mantém o mesmo ID
+      imovelAtualizado.idImovel = idImovel; // Mantém o mesmo ID
       imoveis[imovelIndex] = imovelAtualizado;
       console.log("Imóvel atualizado com sucesso.");
       break;
@@ -108,10 +110,12 @@ const removerImovel = () => {
 
     const id = lerIndice("Qual é o ID do imóvel que deseja remover? ");
 
-    if (idInvalido(id)) {
+    if (idInvalido(idImovel)) {
       console.log("ID inválido.");
     } else {
-      const imovelIndex = imoveis.findIndex((imovel) => imovel.id === id);
+      const imovelIndex = imoveis.findIndex(
+        (imovel) => imovel.idImovel === idImovel
+      );
       imoveis.splice(imovelIndex, 1);
       console.log("Imóvel removido com sucesso.");
       break;
