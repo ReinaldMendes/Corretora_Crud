@@ -5,7 +5,15 @@ const crudCorretor = require("./corretor.js");
 let nextVendaId = 1;
 const vendas = [];
 
-const lerIndice = (mensagem) => parseInt(prompt(mensagem));
+const lerIndice = (mensagem) => {
+  const valor = prompt(mensagem);
+  const numero = parseInt(valor);
+  if (isNaN(numero)) {
+    console.log("Valor inválido. Por favor, insira um número.");
+    return lerIndice(mensagem);
+  }
+  return numero;
+};
 
 const idInvalido = (idvendas) => {
   return !vendas.some((venda) => venda.idvendas === idvendas);
@@ -26,21 +34,21 @@ function listarVenda() {
 const modeloVenda = () => {
   let venda = { idvendas: nextVendaId++ };
 
-  // while (true) {
-  //   crudImovel.listarImovel();
-  //   const idImovel = lerIndice("Qual é o ID do Imóvel? ");
-  //   if (crudImovel.idInvalido(idImovel)) {
-  //     console.log("ID de imóvel inválido.");
-  //   } else {
-  //     venda.idImovel = idImovel;
-  //     break;
-  //   }
-  // }
+  while (true) {
+    crudImovel.listarImovel();
+    const idImovel = lerIndice("Qual é o ID do Imóvel? ");
+    if (crudImovel.idInvalido(idImovel)) {
+      console.log("ID de imóvel inválido.");
+    } else {
+      venda.idImovel = idImovel;
+      break;
+    }
+  }
 
   while (true) {
     crudCliente.listarCliente();
     const idCliente = lerIndice("Qual é o ID do Cliente? ");
-    if (crudCliente.idInvalido(crudCliente.idCliente)) {
+    if (crudCliente.idInvalido(idCliente)) {
       console.log("ID de cliente inválido.");
     } else {
       venda.idCliente = idCliente;
@@ -49,7 +57,7 @@ const modeloVenda = () => {
   }
 
   while (true) {
-    crudCorretor.listarcorretor();
+    crudCorretor.listarCorretor();
     const idCorretor = lerIndice("Qual é o ID do Corretor? ");
     if (crudCorretor.idInvalido(idCorretor)) {
       console.log("ID de corretor inválido.");
