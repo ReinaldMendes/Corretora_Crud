@@ -7,8 +7,8 @@ const vendas = [];
 
 const lerIndice = (mensagem) => parseInt(prompt(mensagem));
 
-const idInvalido = (id, lista) => {
-  return !vendas.some((venda) => venda.id === id);
+const idInvalido = (idvendas) => {
+  return !vendas.some((venda) => venda.idvendas === idvendas);
 };
 
 function listarVenda() {
@@ -17,30 +17,30 @@ function listarVenda() {
   } else {
     vendas.forEach((venda) => {
       console.log(
-        `ID: ${venda.id} - ID Imóvel: ${venda.idImovel} - ID Cliente: ${venda.idCliente} - ID Corretor: ${venda.idCorretor}`
+        `ID: ${venda.idvendas} - ID Imóvel: ${venda.idImovel} - ID Cliente: ${venda.idCliente} - ID Corretor: ${venda.idCorretor}`
       );
     });
   }
 }
 
 const modeloVenda = () => {
-  let venda = { id: nextVendaId++ };
+  let venda = { idvendas: nextVendaId++ };
 
-  while (true) {
-    crudImovel.listarImovel();
-    const idImovel = lerIndice("Qual é o ID do Imóvel? ");
-    if (idInvalido(idImovel, crudImovel.imoveis)) {
-      console.log("ID de imóvel inválido.");
-    } else {
-      venda.idImovel = idImovel;
-      break;
-    }
-  }
+  // while (true) {
+  //   crudImovel.listarImovel();
+  //   const idImovel = lerIndice("Qual é o ID do Imóvel? ");
+  //   if (crudImovel.idInvalido(idImovel)) {
+  //     console.log("ID de imóvel inválido.");
+  //   } else {
+  //     venda.idImovel = idImovel;
+  //     break;
+  //   }
+  // }
 
   while (true) {
     crudCliente.listarCliente();
     const idCliente = lerIndice("Qual é o ID do Cliente? ");
-    if (idInvalido(idCliente, crudCliente.clientes)) {
+    if (crudCliente.idInvalido(crudCliente.idCliente)) {
       console.log("ID de cliente inválido.");
     } else {
       venda.idCliente = idCliente;
@@ -51,7 +51,7 @@ const modeloVenda = () => {
   while (true) {
     crudCorretor.listarcorretor();
     const idCorretor = lerIndice("Qual é o ID do Corretor? ");
-    if (idInvalido(idCorretor, crudCorretor.corretores)) {
+    if (crudCorretor.idInvalido(idCorretor)) {
       console.log("ID de corretor inválido.");
     } else {
       venda.idCorretor = idCorretor;
@@ -77,14 +77,16 @@ const atualizarVenda = () => {
 
     listarVenda();
 
-    const id = lerIndice("Qual é o ID da venda que deseja atualizar? ");
+    const idvendas = lerIndice("Qual é o ID da venda que deseja atualizar? ");
 
-    if (idInvalido(id, vendas)) {
+    if (idInvalido(idvendas)) {
       console.log("ID inválido.");
     } else {
-      const vendaIndex = vendas.findIndex((venda) => venda.id === id);
+      const vendaIndex = vendas.findIndex(
+        (venda) => venda.idvendas === idvendas
+      );
       const vendaAtualizada = modeloVenda();
-      vendaAtualizada.id = id; // Mantém o mesmo ID
+      vendaAtualizada.idvendas = idvendas; // Mantém o mesmo ID
       vendas[vendaIndex] = vendaAtualizada;
       console.log("Venda atualizada com sucesso.");
       break;
@@ -101,12 +103,14 @@ const removerVenda = () => {
 
     listarVenda();
 
-    const id = lerIndice("Qual é o ID da venda que deseja remover? ");
+    const idvendas = lerIndice("Qual é o ID da venda que deseja remover? ");
 
-    if (idInvalido(id, vendas)) {
+    if (idInvalido(idvendas)) {
       console.log("ID inválido.");
     } else {
-      const vendaIndex = vendas.findIndex((venda) => venda.id === id);
+      const vendaIndex = vendas.findIndex(
+        (venda) => venda.idvendas === idvendas
+      );
       vendas.splice(vendaIndex, 1);
       console.log("Venda removida com sucesso.");
       break;
