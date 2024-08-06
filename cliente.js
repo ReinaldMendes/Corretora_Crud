@@ -6,8 +6,8 @@ const lerIndice = (mensagem) => parseInt(prompt(mensagem));
 
 const nomeInvalido = (nome) => nome.trim() === "";
 
-const idInvalido = (id) => {
-  return !clientes.some((cliente) => cliente.id === id);
+const idInvalido = (idCliente) => {
+  return !clientes.some((cliente) => cliente.idCliente === idCliente);
 };
 
 function listarCliente() {
@@ -15,13 +15,13 @@ function listarCliente() {
     console.log("Nenhum cliente cadastrado.");
   } else {
     clientes.forEach((cliente) => {
-      console.log(`ID: ${cliente.id} - Nome: ${cliente.nome}`);
+      console.log(`ID: ${cliente.idCliente} - Nome: ${cliente.nome}`);
     });
   }
 }
 
 const modeloCliente = () => {
-  let cliente = { id: nextClienteId++ };
+  let cliente = { idCliente: nextClienteId++ };
 
   while (true) {
     cliente.nome = prompt("Qual é o nome do Cliente? ").trim();
@@ -50,14 +50,18 @@ const atualizarCliente = () => {
 
     listarCliente();
 
-    const id = lerIndice("Qual é o ID do cliente que deseja atualizar? ");
+    const idCliente = lerIndice(
+      "Qual é o ID do cliente que deseja atualizar? "
+    );
 
-    if (idInvalido(id)) {
+    if (idInvalido(idCliente)) {
       console.log("ID inválido.");
     } else {
-      const clienteIndex = clientes.findIndex((cliente) => cliente.id === id);
+      const clienteIndex = clientes.findIndex(
+        (cliente) => cliente.idCliente === idCliente
+      );
       const clienteAtualizado = modeloCliente();
-      clienteAtualizado.id = id; // Mantém o mesmo ID
+      clienteAtualizado.idCliente = idCliente; // Mantém o mesmo ID
       clientes[clienteIndex] = clienteAtualizado;
       console.log("Cliente atualizado com sucesso.");
       break;
@@ -74,12 +78,14 @@ const removerCliente = () => {
 
     listarCliente();
 
-    const id = lerIndice("Qual é o ID do cliente que deseja remover? ");
+    const idCliente = lerIndice("Qual é o ID do cliente que deseja remover? ");
 
-    if (idInvalido(id)) {
+    if (idInvalido(idCliente)) {
       console.log("ID inválido.");
     } else {
-      const clienteIndex = clientes.findIndex((cliente) => cliente.id === id);
+      const clienteIndex = clientes.findIndex(
+        (cliente) => cliente.idCliente === idCliente
+      );
       clientes.splice(clienteIndex, 1);
       console.log("Cliente removido com sucesso.");
       break;
@@ -92,4 +98,5 @@ module.exports = {
   atualizarCliente,
   removerCliente,
   listarCliente,
+  idInvalido,
 };

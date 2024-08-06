@@ -110,4 +110,5 @@ module.exports = {
   atualizarcorretor,
   removercorretor,
   listarcorretor,
+  idInvalido,
 };

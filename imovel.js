@@ -128,4 +128,5 @@ module.exports = {
   atualizarImovel,
   removerImovel,
   listarImovel,
+  idInvalido,
 };
