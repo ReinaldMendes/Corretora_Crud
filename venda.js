@@ -4,7 +4,26 @@ const crudCliente = require("./cliente.js");
 const crudCorretor = require("./corretor.js");
 let nextVendaId = 1;
 const vendas = [];
+const clientes = [
+  { idCliente: 1, nome: "Cliente 1" },
+  { idCliente: 2, nome: "Cliente 2" },
+  // outros clientes
+];
 
+const listarCliente = () => {
+  clientes.forEach((cliente) => {
+    console.log(`ID: ${cliente.idCliente} - Nome: ${cliente.nome}`);
+  });
+};
+
+const idInvalido = (idCliente) => {
+  return !clientes.some((cliente) => cliente.idCliente === idCliente);
+};
+
+module.exports = {
+  listarCliente,
+  idInvalido,
+};
 const lerIndice = (mensagem) => {
   const valor = prompt(mensagem);
   const numero = parseInt(valor);
